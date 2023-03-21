@@ -1,3 +1,5 @@
+import java.util.Random;
+
 public class Laberinto {
     private class Node{
         int x,y,f,g,h;
@@ -29,6 +31,24 @@ public class Laberinto {
                 }
             }
         }
+        generarEstados('I');
+        generarEstados('G');
+    }
+    private void generarEstados(char estado){
+        int x = new Random().nextInt(FILAS);
+        int y = new Random().nextInt(COLUMNAS);
+
+        laberinto[x][y].setTipo(estado);
     }
 
+    @Override
+    public String toString() {
+        StringBuilder lab = new StringBuilder();
+        for(int i = 0; i < FILAS; i++){
+            for(int j = 0; j < COLUMNAS; j++){
+                lab.append(laberinto[i][j]);
+            }
+            lab.
+        }
+    }
 }
