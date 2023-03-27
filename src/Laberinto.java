@@ -1,8 +1,8 @@
 import java.util.Random;
 
 public class Laberinto {
-    private class Node{
-        int x,y,f,g,h;
+    protected class Node{
+        int x,y,g,h;
         char tipo;
         Node(int x, int y, char tipo){
             this.x = x;
@@ -11,6 +11,18 @@ public class Laberinto {
         }
         void setTipo(char tipo){
             this.tipo = tipo;
+        }
+
+        void calculateG(Node anterior){
+            if(anterior == null){
+                g = 0;
+            }else{
+                g = anterior.g + Math.abs(x - anterior.x) + Math.abs(y - anterior.y);
+            }
+        }
+
+        void calculateH(){
+            h = Math.abs(y - getEnd().y) + Math.abs(x - getEnd().x);
         }
 
         @Override
@@ -23,29 +35,49 @@ public class Laberinto {
     private static int COLUMNAS = 80;
     private final double PORC_OBSTACULO = 0.30;
     private Node[][] laberinto;
+    private Node start, end;
+
+    public Node[][] getLaberinto() {
+        return laberinto;
+    }
+
+    public Node getStart() {
+        return start;
+    }
+
+    public Node getEnd() {
+        return end;
+    }
 
     public Laberinto(){
         laberinto = new Node[FILAS][COLUMNAS];
-
+        generarEstados('I');
+        generarEstados('G');
         for(int i = 0; i < FILAS; i++){
             for(int j = 0; j < COLUMNAS; j++){
                 double prob = Math.random();
                 if(prob <= PORC_OBSTACULO && contObs < FILAS * COLUMNAS * 30 / 100){
                     contObs++;
                     laberinto[i][j] = new Node(i,j,'*');
+                    laberinto[i][j].calculateH();
                 }else{
                     laberinto[i][j] = new Node(i,j,' ');
                 }
             }
         }
-        generarEstados('I');
-        generarEstados('G');
+        laberinto[start.x][start.y] = start;
+        laberinto[end.x][end.y] = end;
+
     }
     private void generarEstados(char estado){
         int x = new Random().nextInt(FILAS);
         int y = new Random().nextInt(COLUMNAS);
-
-        laberinto[x][y].setTipo(estado);
+        if(estado == 'I'){
+            start = new Node(x,y,estado);
+        }
+        else {
+            end = new Node(x,y,estado);
+        }
     }
 
     @Override
