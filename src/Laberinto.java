@@ -1,36 +1,58 @@
+import java.util.ArrayList;
 import java.util.Random;
 
 public class Laberinto {
     protected class Node{
-        int x,y,g,h;
-        char tipo;
-        Node(int x, int y, char tipo){
-            this.x = x;
-            this.y = y;
-            setTipo(tipo);
-        }
+    	int x,y;
+    	char type;
+    	Node bestPrev;
+    	ArrayList<Node> neighbours;
+    	int g,f,h;
+    	boolean optimusPath;
+    	
+    	public Node(int x, int y, char type) {
+    		
+    		this.x = x;
+    		this.y = y;
+    		this.type = type;
+    		
+    		bestPrev = null;
+    		neighbours = null;
+    		g = -1 ; h = -1; f = -1;
+    		
+    		optimusPath = false;
+    		
+    	}
+    	
         void setTipo(char tipo){
-            this.tipo = tipo;
+            this.type = tipo;
         }
 
-        void calculateG(Node anterior){
-            if(anterior == null){
+        void calculateG(){
+            if(bestPrev == null){
                 g = 0;
             }else{
-                g = anterior.g + Math.abs(x - anterior.x) + Math.abs(y - anterior.y);
+            	g = bestPrev.g + 1;
+//                g = anterior.g + Math.abs(x - anterior.x) + Math.abs(y - anterior.y);
             }
         }
 
         void calculateH(){
             h = Math.abs(y - getEnd().y) + Math.abs(x - getEnd().x);
         }
+        
+        void calculateF() {
+        	f = g + h;
+        }
 
         @Override
         public String toString() {
-            return String.valueOf(tipo);
+//            return String.valueOf(type);
+        	String res = "" + f;
+        	return res;
         }
     }
-    private int contObs = 0;
+    
     private final int FILAS = 60;
     private static int COLUMNAS = 80;
     private final double PORC_OBSTACULO = 0.30;
@@ -56,13 +78,14 @@ public class Laberinto {
         for(int i = 0; i < FILAS; i++){
             for(int j = 0; j < COLUMNAS; j++){
                 double prob = Math.random();
-                if(prob <= PORC_OBSTACULO && contObs < FILAS * COLUMNAS * 30 / 100){
-                    contObs++;
+                if(prob <= PORC_OBSTACULO){
+                    //OBSTACULO
                     laberinto[i][j] = new Node(i,j,'*');
-                    laberinto[i][j].calculateH();
                 }else{
+                	//ESPACIO VACIO
                     laberinto[i][j] = new Node(i,j,' ');
                 }
+                laberinto[i][j].calculateH();
             }
         }
         laberinto[start.x][start.y] = start;
@@ -89,7 +112,6 @@ public class Laberinto {
             }
             lab.append('\n');
         }
-        lab.append('\n' + "30% = ").append(FILAS * COLUMNAS * 30 / 100).append(" Numero de obstaculos: ").append(contObs);
         return lab.toString();
     }
 }
