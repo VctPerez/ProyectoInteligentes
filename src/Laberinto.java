@@ -48,6 +48,7 @@ public class Laberinto {
         @Override
         public String toString() {
             return String.valueOf(type);
+       // 	return "("+ x+ ", "+ y + ")"; 
         }
     }
     public Node getNode(int i, int j){

@@ -1,7 +1,7 @@
 import java.util.*;
 
 public class A_algorithm {
-    private static SortedSet<Laberinto.Node> openSet = new TreeSet<>(new FComparator()), closedSet = new TreeSet<>(new FComparator());
+    private static PriorityQueue<Laberinto.Node> openSet = new PriorityQueue<>(new FComparator()), closedSet = new PriorityQueue<>(new FComparator()); 
     private static Map<Laberinto.Node, Laberinto.Node> parent = new HashMap<>();
 
     public static void run(Laberinto lab){
@@ -14,11 +14,12 @@ public class A_algorithm {
         System.out.println(openSet.toString());
 
         while(!openSet.isEmpty()){
-            //System.out.println("si");
-        	Laberinto.Node current = openSet.last();
+           // System.out.println("si");
+            //System.out.println(openSet.toString());
+        	Laberinto.Node current = openSet.peek();
             if(current.type == lab.getEnd().type){
-                //System.out.println("hola");
-                reconstruct_path(lab,current);
+                System.out.println("hola");
+                reconstruct_path(lab,current.bestPrev);
             }
             openSet.remove(current);
             closedSet.add(current);
@@ -41,8 +42,8 @@ public class A_algorithm {
 
     private static void reconstruct_path(Laberinto lab, Laberinto.Node current) {
         //System.out.println("recontruye");
-        if(current.type != lab.getStart().type){
-            System.out.println("hola2");
+        if(current.type != lab.getStart().type ){
+           // System.out.println("hola2");
             current.setTipo('+');
             reconstruct_path(lab,current.bestPrev);
         }
@@ -54,13 +55,13 @@ public class A_algorithm {
         if(node.x > 0){
             if(lab.getNode(node.x - 1, node.y).type != '*')neighbors.add(lab.getNode(node.x - 1, node.y));
         }
-        if(node.x < Laberinto.COLUMNAS - 1){
+        if(node.x < Laberinto.FILAS - 1){
             if(lab.getNode(node.x + 1, node.y).type != '*')neighbors.add(lab.getNode(node.x + 1, node.y));
         }
         if(node.y > 0){
             if(lab.getNode(node.x, node.y - 1).type != '*')neighbors.add(lab.getNode(node.x, node.y - 1));
         }
-        if(node.y < Laberinto.FILAS - 1){
+        if(node.y < Laberinto.COLUMNAS - 1){
             if(lab.getNode(node.x, node.y + 1).type != '*') neighbors.add(lab.getNode(node.x, node.y + 1));
         }
         return neighbors;
@@ -77,6 +78,6 @@ public class A_algorithm {
 class FComparator implements Comparator<Laberinto.Node> {
 	@Override
 	public int compare(Laberinto.Node n1 , Laberinto.Node n2) {
-		return -Integer.compare(n1.f, n2.f);
+		return Integer.compare(n1.f, n2.f);
 	}
 }
