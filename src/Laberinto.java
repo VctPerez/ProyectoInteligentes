@@ -17,7 +17,6 @@ public class Laberinto {
     		this.type = type;
     		
     		bestPrev = null;
-    		neighbours = null;
     		g = -1 ; h = -1; f = -1;
     		
     		optimusPath = false;
@@ -28,9 +27,10 @@ public class Laberinto {
             this.type = tipo;
         }
 
-        void calculateG(){
+        public void calculateG(){
             if(bestPrev == null){
                 g = 0;
+                bestPrev = this;
             }else{
             	g = bestPrev.g + 1;
 //                g = anterior.g + Math.abs(x - anterior.x) + Math.abs(y - anterior.y);
@@ -47,14 +47,15 @@ public class Laberinto {
 
         @Override
         public String toString() {
-//            return String.valueOf(type);
-        	String res = "" + f;
-        	return res;
+            return String.valueOf(type);
         }
     }
+    public Node getNode(int i, int j){
+        return laberinto[i][j];
+    }
     
-    private final int FILAS = 60;
-    private static int COLUMNAS = 80;
+    public static final int FILAS = 60;
+    public static final int COLUMNAS = 80;
     private final double PORC_OBSTACULO = 0.30;
     private Node[][] laberinto;
     private Node start, end;
