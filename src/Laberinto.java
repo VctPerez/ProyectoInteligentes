@@ -112,13 +112,13 @@ public class Laberinto {
     public void printMaze(boolean initial){
         //El booleano sirve para determinar si tiene que resetear el archivo o no
     	try (PrintWriter pw = new PrintWriter(new FileWriter("salida.txt",initial))){
-    		
-            StringBuilder lab = new StringBuilder();
+
             for(int i = 0; i < FILAS; i++){
+                StringBuilder lab = new StringBuilder();
                 for(int j = 0; j < COLUMNAS; j++) {
                     lab.append(laberinto[i][j]);
                 }
-                pw.println(lab.toString());
+                pw.println(lab);
             }
             pw.println("\n -------------------------------------------- \n");
 		} catch (IOException e) {
