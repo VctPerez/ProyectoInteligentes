@@ -1,3 +1,7 @@
+import java.io.FileNotFoundException;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.Random;
 
@@ -103,6 +107,23 @@ public class Laberinto {
         else {
             end = new Node(x,y,estado);
         }
+    }
+    
+    public void printMaze(boolean initial){
+        //El booleano sirve para determinar si tiene que resetear el archivo o no
+    	try (PrintWriter pw = new PrintWriter(new FileWriter("salida.txt",initial))){
+    		
+            StringBuilder lab = new StringBuilder();
+            for(int i = 0; i < FILAS; i++){
+                for(int j = 0; j < COLUMNAS; j++) {
+                    lab.append(laberinto[i][j]);
+                }
+                pw.println(lab.toString());
+            }
+            pw.println("\n -------------------------------------------- \n");
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
     }
 
     @Override

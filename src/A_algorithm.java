@@ -3,6 +3,7 @@ import java.util.*;
 public class A_algorithm {
     private static PriorityQueue<Laberinto.Node> openSet = new PriorityQueue<>(new FComparator()), closedSet = new PriorityQueue<>(new FComparator()); 
     private static Map<Laberinto.Node, Laberinto.Node> parent = new HashMap<>();
+    private static boolean pathFound = false;
 
     public static void run(Laberinto lab){
     	
@@ -18,8 +19,8 @@ public class A_algorithm {
             //System.out.println(openSet.toString());
         	Laberinto.Node current = openSet.peek();
             if(current.type == lab.getEnd().type){
-                System.out.println("hola");
                 reconstruct_path(lab,current.bestPrev);
+                pathFound = true;
             }
             openSet.remove(current);
             closedSet.add(current);
@@ -37,7 +38,11 @@ public class A_algorithm {
                 }
             }
         }
-
+        
+        if(!pathFound) {
+        	System.err.println("Camino no encontrado");
+        }
+        
     }
 
     private static void reconstruct_path(Laberinto lab, Laberinto.Node current) {
