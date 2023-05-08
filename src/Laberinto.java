@@ -55,7 +55,7 @@ public class Laberinto {
     
     public static final int FILAS = 60;
     public static final int COLUMNAS = 80;
-    public static final char obstaculo = '■';
+    public static final char obstaculo = '*';
     private final double PORC_OBSTACULO = 0.5;
     private Node[][] laberinto;
     private Node start, end;
@@ -81,7 +81,7 @@ public class Laberinto {
                 double prob = Math.random();
                 if(prob <= PORC_OBSTACULO){
                     //OBSTACULO
-                    laberinto[i][j] = new Node(i,j,'■');
+                    laberinto[i][j] = new Node(i,j,obstaculo);
                 }else{
                 	//ESPACIO VACIO
                     laberinto[i][j] = new Node(i,j,' ');
