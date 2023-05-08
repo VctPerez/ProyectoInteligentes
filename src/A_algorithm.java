@@ -2,7 +2,6 @@ import java.util.*;
 
 public class A_algorithm {
     private static PriorityQueue<Laberinto.Node> openSet = new PriorityQueue<>(new FComparator()), closedSet = new PriorityQueue<>(new FComparator()); 
-    private static Map<Laberinto.Node, Laberinto.Node> parent = new HashMap<>();
     private static boolean pathFound = false;
 
     public static void run(Laberinto lab){
@@ -15,8 +14,6 @@ public class A_algorithm {
         System.out.println(openSet.toString());
 
         while(!openSet.isEmpty()){
-           // System.out.println("si");
-            //System.out.println(openSet.toString());
         	Laberinto.Node current = openSet.peek();
             if(current.type == lab.getEnd().type){
                 reconstruct_path(lab,current.bestPrev);
@@ -46,9 +43,7 @@ public class A_algorithm {
     }
 
     private static void reconstruct_path(Laberinto lab, Laberinto.Node current) {
-        //System.out.println("recontruye");
         if(current.type != lab.getStart().type ){
-           // System.out.println("hola2");
             current.setTipo('+');
             reconstruct_path(lab,current.bestPrev);
         }
@@ -71,13 +66,7 @@ public class A_algorithm {
         }
         return neighbors;
     }
-    private static Laberinto.Node lowestFvalue() {
-        return null;
-    }
-
-    private void writeFile(){
-    	
-    }
+    
 }
 
 class FComparator implements Comparator<Laberinto.Node> {

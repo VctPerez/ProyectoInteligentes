@@ -1,4 +1,4 @@
-import java.io.FileNotFoundException;
+
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -37,7 +37,6 @@ public class Laberinto {
                 bestPrev = this;
             }else{
             	g = bestPrev.g + 1;
-//                g = anterior.g + Math.abs(x - anterior.x) + Math.abs(y - anterior.y);
             }
         }
 
@@ -52,11 +51,7 @@ public class Laberinto {
         @Override
         public String toString() {
             return String.valueOf(type);
-       // 	return "("+ x+ ", "+ y + ")"; 
         }
-    }
-    public Node getNode(int i, int j){
-        return laberinto[i][j];
     }
     
     public static final int FILAS = 60;
@@ -64,6 +59,10 @@ public class Laberinto {
     private final double PORC_OBSTACULO = 0.30;
     private Node[][] laberinto;
     private Node start, end;
+   
+    public Node getNode(int i, int j){
+        return laberinto[i][j];
+    }
 
     public Node[][] getLaberinto() {
         return laberinto;
