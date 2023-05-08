@@ -11,8 +11,6 @@ public class A_algorithm {
         lab.getStart().calculateF();
         
         openSet.add(lab.getStart());
-        System.out.println(openSet.toString());
-
         while(!openSet.isEmpty()){
         	Laberinto.Node current = openSet.peek();
             if(current.type == lab.getEnd().type){
@@ -53,16 +51,16 @@ public class A_algorithm {
         List<Laberinto.Node> neighbors = new ArrayList<>();
 
         if(node.x > 0){
-            if(lab.getNode(node.x - 1, node.y).type != '*')neighbors.add(lab.getNode(node.x - 1, node.y));
+            if(lab.getNode(node.x - 1, node.y).type != Laberinto.obstaculo)neighbors.add(lab.getNode(node.x - 1, node.y));
         }
         if(node.x < Laberinto.FILAS - 1){
-            if(lab.getNode(node.x + 1, node.y).type != '*')neighbors.add(lab.getNode(node.x + 1, node.y));
+            if(lab.getNode(node.x + 1, node.y).type != Laberinto.obstaculo)neighbors.add(lab.getNode(node.x + 1, node.y));
         }
         if(node.y > 0){
-            if(lab.getNode(node.x, node.y - 1).type != '*')neighbors.add(lab.getNode(node.x, node.y - 1));
+            if(lab.getNode(node.x, node.y - 1).type != Laberinto.obstaculo)neighbors.add(lab.getNode(node.x, node.y - 1));
         }
         if(node.y < Laberinto.COLUMNAS - 1){
-            if(lab.getNode(node.x, node.y + 1).type != '*') neighbors.add(lab.getNode(node.x, node.y + 1));
+            if(lab.getNode(node.x, node.y + 1).type != Laberinto.obstaculo) neighbors.add(lab.getNode(node.x, node.y + 1));
         }
         return neighbors;
     }
@@ -72,6 +70,7 @@ public class A_algorithm {
 class FComparator implements Comparator<Laberinto.Node> {
 	@Override
 	public int compare(Laberinto.Node n1 , Laberinto.Node n2) {
-		return Integer.compare(n1.f, n2.f);
+		//return n1.f == n2.f ? Integer.compare(n1.g, n2.g): Integer.compare(n1.f, n2.f);
+        return Integer.compare(n1.f, n2.f);
 	}
 }

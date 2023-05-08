@@ -10,7 +10,6 @@ public class Laberinto {
     	int x,y;
     	char type;
     	Node bestPrev;
-    	ArrayList<Node> neighbours;
     	int g,f,h;
     	boolean optimusPath;
     	
@@ -56,16 +55,13 @@ public class Laberinto {
     
     public static final int FILAS = 60;
     public static final int COLUMNAS = 80;
-    private final double PORC_OBSTACULO = 0.30;
+    public static final char obstaculo = '■';
+    private final double PORC_OBSTACULO = 0.5;
     private Node[][] laberinto;
     private Node start, end;
    
     public Node getNode(int i, int j){
         return laberinto[i][j];
-    }
-
-    public Node[][] getLaberinto() {
-        return laberinto;
     }
 
     public Node getStart() {
@@ -85,7 +81,7 @@ public class Laberinto {
                 double prob = Math.random();
                 if(prob <= PORC_OBSTACULO){
                     //OBSTACULO
-                    laberinto[i][j] = new Node(i,j,'*');
+                    laberinto[i][j] = new Node(i,j,'■');
                 }else{
                 	//ESPACIO VACIO
                     laberinto[i][j] = new Node(i,j,' ');
@@ -111,14 +107,8 @@ public class Laberinto {
     public void printMaze(boolean initial){
         //El booleano sirve para determinar si tiene que resetear el archivo o no
     	try (PrintWriter pw = new PrintWriter(new FileWriter("salida.txt",initial))){
-
-            for(int i = 0; i < FILAS; i++){
-                StringBuilder lab = new StringBuilder();
-                for(int j = 0; j < COLUMNAS; j++) {
-                    lab.append(laberinto[i][j]);
-                }
-                pw.println(lab);
-            }
+            if(end.bestPrev != null || !initial) pw.println(this);
+            else pw.println("NO SE HA ENCONTRADO NINGUN CAMINO");
             pw.println("\n -------------------------------------------- \n");
 		} catch (IOException e) {
 			e.printStackTrace();

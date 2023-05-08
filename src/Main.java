@@ -6,7 +6,8 @@ public class Main {
         laberinto.printMaze(false);
 
         A_algorithm.run(laberinto);
-        
+
+        System.out.println("\n -------------------------------------------- \n");
         System.out.println(laberinto);
         laberinto.printMaze(true);
         
