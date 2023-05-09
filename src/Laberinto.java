@@ -2,7 +2,6 @@
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.util.ArrayList;
 import java.util.Random;
 
 public class Laberinto {
@@ -56,7 +55,7 @@ public class Laberinto {
     public static final int FILAS = 60;
     public static final int COLUMNAS = 80;
     public static final char obstaculo = '*';
-    private final double PORC_OBSTACULO = 0.5;
+    private final double PORC_OBSTACULO = 0.3;
     private Node[][] laberinto;
     private Node start, end;
    
